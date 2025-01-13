@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnalisez Votre Circuit à Dubaï</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-2xl font-bold text-blue-600">Dubaï Explorer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Personnalisation du Circuit -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Créez votre circuit personnalisé</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Formulaire de personnalisation -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <form id="circuit-form">
+                    <!-- Durée du séjour -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Durée du séjour
+                        </label>
+                        <select id="duration" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="3">3 jours</option>
+                            <option value="5">5 jours</option>
+                            <option value="7">7 jours</option>
+                            <option value="10">10 jours</option>
+                        </select>
+                    </div>
+
+                    <!-- Budget -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Budget par personne (en AED)
+                        </label>
+                        <input type="range" id="budget" min="1000" max="10000" step="500" class="w-full" oninput="updateBudgetValue(this.value)">
+                        <span id="budgetValue" class="text-blue-600 font-bold"></span> AED
+                    </div>
+
+                    <!-- Intérêts -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Centres d'intérêt
+                        </label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="culture">
+                                <span class="ml-2">Culture</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="shopping">
+                                <span class="ml-2">Shopping</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="adventure">
+                                <span class="ml-2">Aventure</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="luxury">
+                                <span class="ml-2">Luxe</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Type d'hébergement -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Type d'hébergement
+                        </label>
+                        <select id="accommodation" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="hotel3">Hôtel 3 étoiles</option>
+                            <option value="hotel4">Hôtel 4 étoiles</option>
+                            <option value="hotel5">Hôtel 5 étoiles</option>
+                            <option value="luxury">Palace</option>
+                        </select>
+                    </div>
+
+                    <!-- Transport -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Transport sur place
+                        </label>
+                        <select id="transport" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="public">Transports en commun</option>
+                            <option value="taxi">Taxi</option>
+                            <option value="private">Chauffeur privé</option>
+                            <option value="rental">Location de voiture</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                        Générer mon circuit
+                    </button>
+                </form>
+            </div>
+
+            <!-- Aperçu du Circuit -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Votre circuit personnalisé</h2>
+                <div id="circuit-preview" class="space-y-4">
+                    <!-- Le circuit sera généré ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateBudgetValue(value) {
+            document.getElementById('budgetValue').textContent = value;
+        }
+
+        // Initialiser la valeur du budget
+        updateBudgetValue(document.getElementById('budget').value);
+
+        // Exemple d'activités par catégorie
+        const activities = {
+            culture: [
+                "Visite de la mosquée Jumeirah",
+                "Tour du quartier historique Al Fahidi",
+                "Musée de Dubaï",
+                "Dubai Frame"
+            ],
+            shopping: [
+                "Dubai Mall",
+                "Mall of the Emirates",
+                "Gold Souk",
+                "Global Village"
+            ],
+            adventure: [
+                "Safari dans le désert",
+                "Ski Dubai",
+                "Parachutisme à Palm Jumeirah",
+                "Aquaventure Waterpark"
+            ],
+            luxury: [
+                "Dîner au Burj Al Arab",
+                "Spa au One&Only Royal Mirage",
+                "Yacht privé à Dubai Marina",
+                "Hélicoptère tour"
+            ]
+        };
+
+        document.getElementById('circuit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupérer les valeurs du formulaire
+            const duration = document.getElementById('duration').value;
+            const budget = document.getElementById('budget').value;
+            const interests = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+            
+            // Générer le circuit
+            generateCircuit(duration, budget, interests);
+        });
+
+        function generateCircuit(duration, budget, interests) {
+            const preview = document.getElementById('circuit-preview');
+            preview.innerHTML = ''; // Effacer le contenu précédent
+
+            // Générer le programme jour par jour
+            for (let day = 1; day <= duration; day++) {
+                const dayProgram = document.createElement('div');
+                dayProgram.className = 'border-b pb-4';
+                
+                // Titre du jour
+                const dayTitle = document.createElement('h3');
+                dayTitle.className = 'font-bold text-lg text-blue-600 mb-2';
+                dayTitle.textContent = `Jour ${day}`;
+                dayProgram.appendChild(dayTitle);
+
+                // Activités du jour
+                const activitiesList = document.createElement('ul');
+                activitiesList.className = 'space-y-2';
+
+                // Sélectionner aléatoirement des activités basées sur les intérêts
+                interests.forEach(interest => {
+                    const activity = activities[interest][Math.floor(Math.random() * activities[interest].length)];
+                    const activityItem = document.createElement('li');
+                    activityItem.className = 'flex items-center';
+                    activityItem.innerHTML = `<i class="fas fa-check text-green-500 mr-2"></i> ${activity}`;
+                    activitiesList.appendChild(activityItem);
+                });
+
+                dayProgram.appendChild(activitiesList);
+                preview.appendChild(dayProgram);
+            }
+
+            // Ajouter le résumé du budget
+            const budgetSummary = document.createElement('div');
+            budgetSummary.className = 'mt-6 p-4 bg-blue-50 rounded-lg';
+            budgetSummary.innerHTML = `
+                <h4 class="font-bold text-lg mb-2">Budget estimé</h4>
+                <p>Budget total : ${budget} AED par personne</p>
+                <p class="text-sm text-gray-600">Inclut l'hébergement, les activités et les transports</p>
+            `;
+            preview.appendChild(budgetSummary);
+        }
+    </script>
+</body>
+</html>
